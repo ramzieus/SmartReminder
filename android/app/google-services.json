@@ -13,7 +13,16 @@
           "package_name": "com.becho.smart_reminder"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "404108033804-aj9251hn0rtgdop5no8buttk3if0n2r1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.becho.smart_reminder",
+            "certificate_hash": "89b54f8d8423ecc931040eb2eac05ddf88d8e72e"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCqcrlnZGGGFCpzi8ETnvbsgDPIWEBo6-g"

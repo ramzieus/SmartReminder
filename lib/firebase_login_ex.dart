@@ -3,28 +3,6 @@ import 'package:flutter/material.dart';
 import 'firebase_constants.dart';
 import 'dart:async';
 
-class FirebaseLoginExample extends MyRoute {
-  const FirebaseLoginExample(
-      [String sourceFile = 'firebase_login_ex.dart'])
-      : super(sourceFile);
-
-  @override
-  get title => 'Firebase login';
-
-  @override
-  get description => 'Google/Anonymous sign in';
-
-  @override
-  get links => {
-        'Youtube video': 'https://www.youtube.com/watch?v=JYCNvWKF7vw',
-      };
-
-  @override
-  Widget buildMyRouteContent(BuildContext context) {
-    return LoginPage();
-  }
-}
-
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
   @override
