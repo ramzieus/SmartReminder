@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SecondRoute()),
+                                      builder: (context) => ListDisplay()),
                                 );
                               });
                             },
@@ -63,6 +63,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
+List<String> tiitle = [];
+List<String> desc = [];
+List<String> donee = [];
 Widget _showPasswordInput() {
   return Padding(
     padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
@@ -111,23 +114,154 @@ Widget _showLogo() {
   );
 }
 
+class ListDisplay extends StatefulWidget {
+  @override
+  State createState() => new DyanmicList();
+}
+
+class DyanmicList extends State<ListDisplay> {
+  final a = TextEditingController();
+  final b = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the Widget is disposed
+    a.dispose();
+    b.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext ctxt) {
+    return new Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showDialog(
+              child: Dialog(
+                  child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(hintText: 'Note title'),
+                      controller: a,
+                    ),
+                    TextField(
+                      decoration: InputDecoration(hintText: 'discription'),
+                      controller: b,
+                    ),
+                    
+                    RaisedButton.icon(
+                      icon: Icon(Icons.save),
+                      label: Text('Save !'),
+                      onPressed: () {
+                        tiitle.add(a.text);
+                        desc.add(b.text);
+                        donee.add(null);
+                        a.clear();
+                        b.clear();
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ),
+              )),
+              context: context);
+
+          setState(() {});
+        },
+        icon: Icon(Icons.add),
+        label: Text("add new reminder"),
+      ),
+      appBar: AppBar(
+        title: Text("Welcome User"),
+      ),
+      body: ListView.builder(
+        itemCount: tiitle.length,
+        itemBuilder: (context, position) {
+          // ListTile(
+          //   leading: Icon(Icons.access_alarm),
+          //   title: Text(position.toString()),
+          //   subtitle: Text('just test'),
+          //   trailing: Icon(Icons.done),
+          // );
+
+          return Card(
+            child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: ListTile(
+                leading: Icon(Icons.access_alarm),
+                title: Text(tiitle[position]),
+                subtitle: Text(desc[position]),
+                trailing: Icon(
+                  donee[position] == null ? Icons.done : Icons.done_all,
+                  color: donee[position] != null ? Colors.blue : null,
+                ),
+                onTap: () {
+                  donee[position] == 'true'
+                      ? donee[position] = null
+                      : donee[position] = 'true';
+                  setState(() {});
+                },
+                onLongPress: () {
+                  setState(() {
+                    tiitle.removeAt(position);
+                    desc.removeAt(position);
+                    donee.removeAt(position);
+                  });
+                },
+              ),
+              // child: Text(
+              //   choco[position],
+              //   style: TextStyle(fontSize: 22.0),
+              // ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
-          icon: Icon(Icons.add),
-          label: Text("add new reminder"),
-),
+        onPressed: () {
+          tiitle.add('hhhhhh');
+        },
+        icon: Icon(Icons.add),
+        label: Text("add new reminder"),
+      ),
       appBar: AppBar(
         title: Text("Welcome User"),
-      ), 
-      body: Center(
-        child: Opacity(
-          opacity: .2,
-        child: Text('Add new reminder'),
       ),
+      body: ListView.builder(
+        itemCount: tiitle.length,
+        itemBuilder: (context, position) {
+          // ListTile(
+          //   leading: Icon(Icons.access_alarm),
+          //   title: Text(position.toString()),
+          //   subtitle: Text('just test'),
+          //   trailing: Icon(Icons.done),
+          // );
+
+          return Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListTile(
+                leading: Icon(Icons.access_alarm),
+                title: Text(tiitle[position]),
+                subtitle: Text('just test'),
+                trailing: Icon(Icons.done),
+              ),
+              // child: Text(
+              //   choco[position],
+              //   style: TextStyle(fontSize: 22.0),
+              // ),
+            ),
+          );
+        },
       ),
     );
   }
